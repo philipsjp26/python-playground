@@ -1,1 +1,2 @@
+# Shortcut for update models from database
 sqlacodegen mysql+oursql://user:password@localhost/dbname
