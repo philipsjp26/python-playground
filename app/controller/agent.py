@@ -25,7 +25,7 @@ class AgentController:
 
             agents = AgentModel(
                 name=agent.name,
-                privy_id=agent.privy_id                
+                privy_id=agent.privy_id.upper()              
             )
             
             for value in role_is_exist:                
@@ -42,8 +42,10 @@ class AgentController:
     def get_all():
         try:
             agents = session.query(AgentModel).options(subqueryload(AgentModel.roles)).all()            
-            if agents is None:
-                return None
+            
+            if len(agents) is 0:
+                messages = "Data not found"
+                return None, messages, 200
 
             messages = "Success retrieve data"
 
@@ -54,14 +56,13 @@ class AgentController:
     @staticmethod
     def get_by_privy_id(privy_id: str):
         try:
-            agent = session.query(AgentModel).filter(
-                AgentModel.privy_id == privy_id).options(joinedload(AgentModel.roles)).first()
+            agent = session.query(AgentModel).filter_by(privy_id = str(privy_id)).first()
             if not agent:
                 messages = "Agent not found"
                 return None, messages, 200
             messages = "Success retrieve data"
             return agent, messages, 200
-        except Exception as e:
+        except Exception as e:            
             return None, str(e), status.HTTP_500_INTERNAL_SERVER_ERROR
 
     @staticmethod

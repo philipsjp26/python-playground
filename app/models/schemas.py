@@ -12,5 +12,6 @@ class RoleBase(BaseModel):
 class AgentBase(BaseModel):
     name: str
     privy_id: str
+    roles: List[int]
     created_at: Union[datetime, None] = datetime.now().strftime(
         "%Y-%m-%d %H:%M:%S")

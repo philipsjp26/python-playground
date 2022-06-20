@@ -12,6 +12,12 @@ agent_roles = Table(
     Column('role_id', ForeignKey('roles.id'), primary_key=True, index=True),
     Column('agents_id', ForeignKey('agents.id'), primary_key=True, index=True)
 )
+# class AgentsRoles(Base):
+#     __tablename__ = 'agents_roles'
+#     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+#     agents_id = Column('agents_id', ForeignKey('agents.id'), primary_key=True, index=True)
+#     role_id = Column('role_id', ForeignKey('agents.id'), primary_key=True, index=True)
+    
 
 class Agent(Base):
     __tablename__ = 'agents'
@@ -23,14 +29,13 @@ class Agent(Base):
     updated_at = Column(DateTime)
     roles = relationship('Role', secondary=agent_roles, backref='roles')
 
-
 class Role(Base):
     __tablename__ = 'roles'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
-    agents = relationship("Agent", secondary=agent_roles, backref='agents')
     created_at = Column(DateTime)
-    updated_at = Column(DateTime)
+    updated_at = Column(DateTime)    
+    # agents = relationship('Agent', secondary=agent_roles, back_populates='roles')
 
 

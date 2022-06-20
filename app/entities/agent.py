@@ -1,5 +1,5 @@
 from typing import List, Union
-from datetime import datetime
+from datetime import datetime, date
 from pydantic import BaseModel
 
 
@@ -11,5 +11,5 @@ class OurBasedModel(BaseModel):
 class AgentEntity(OurBasedModel):
     id: int
     name: str
-    privy_id: str    
-    created_at: Union[datetime, None]
+    privy_id: str
+    created_at: date
